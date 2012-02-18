@@ -236,6 +236,8 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
     this._headerView = headerScrollView.get('contentView');
 
     this.set('childViews', [bodyScrollView, headerScrollView]);
+
+    this._updateColumnObservers();
   },
   
   /*
