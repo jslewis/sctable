@@ -72,7 +72,13 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
         var iconKey = col.get('iconKey');
   
         width = col.get('width') || 0;
-        context = context.push('<div class=\"cell col-%@ %@\" style=\"left: %@px; top: 0px; bottom: 0px; width: %@px;\">'.fmt(index, (iconKey ? 'has-icon' : ''), left, width));
+        if (width < 1) {
+          // Percent layout.
+          context = context.push('<div class=\"cell col-%@ %@\" style=\"left: %@%; top: 0px; bottom: 0px; width: %@%;\">'.fmt(i, (iconKey ? 'has-icon' : ''), left * 100, width * 100));
+        } else {
+          // Pixel layout.
+          context = context.push('<div class=\"cell col-%@ %@\" style=\"left: %@px; top: 0px; bottom: 0px; width: %@px;\">'.fmt(i, (iconKey ? 'has-icon' : ''), left, width));
+        }
         context = tableDelegate.renderTableCellContent(this, context, content, contentIndex, col, index);
         context = iconKey ? context.push('<div class=\"icon %@\"></div></div>'.fmt(content.get(iconKey))) : context.push('</div>');
   
